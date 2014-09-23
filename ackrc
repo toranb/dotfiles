@@ -1,0 +1,10 @@
+--literal
+--smart-case
+--type-set=handlebars=.handlebars
+--type-set=javascript=.js
+--type-set=typescript=.ts
+--type=python
+--type=ruby
+--type=handlebars
+--type=javascript
+--type=typescript

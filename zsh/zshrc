@@ -1,0 +1,152 @@
+#!/bin/zsh
+# vim: set foldmarker=<<,>> foldlevel=0 foldmethod=marker:
+#===================================================================================
+#                 .__
+#  ________  _____|  |_________   ____
+#  \___   / /  ___/  |  \_  __ \_/ ___\
+#   /    /  \___ \|   Y  \  | \/\  \___
+#  /_____ \/____  >___|  /__|    \___  >
+#        \/     \/     \/            \/
+#===================================================================================
+#
+
+# Set up the prompt <<1
+#-------------------------------------------------------------------------------
+if [[ ! -n "$ZSHRUN" ]]; then
+    source $HOME/dotfiles/zsh/zsh_prompt
+fi
+# Precmd local array variable <<2
+#-------------------------------------------------------------------------------
+local -a precmd_functions
+# >>2
+# Precmd functions <<2
+#------------------------------------------------------------------------------
+# Run precmd functions so we get our pimped out prompt
+#------------------------------------------------------------------------------
+precmd_functions=( precmd_prompt )
+# >>2
+# >>1
+
+# Setup antigen <<1
+#-------------------------------------------------------------------------------
+if [[ ! -f ~/.antigen.zsh ]]; then
+    curl https://raw.githubusercontent.com/zsh-users/antigen/master/antigen.zsh > ~/.antigen.zsh
+fi
+
+ANTIGEN_DEFAULT_REPO_URL=https://bitbucket.org/toranb/zsh-components-osx
+source ~/.antigen.zsh
+# >>1
+
+# set antigen bundles <<1
+#-------------------------------------------------------------------------------
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle aliases
+antigen bundle any
+antigen bundle key_bindings
+antigen bundle mem_usage
+antigen bundle nicemount
+antigen bundle path
+antigen bundle simple_server
+antigen bundle spell
+antigen bundle workon_node_env
+antigen bundle workon_virtualenv
+antigen bundle cd
+antigen bundle sex_move_generator
+antigen bundle ackv
+antigen bundle ff
+antigen bundle extract
+# >>1
+
+# General Settings <<1
+# Autoload colors and tab completion <<2
+#-------------------------------------------------------------------------------
+autoload -U colors && colors
+autoload -U compinit
+compinit -C
+# >> 2
+# Modify default zsh directory coloring on ls commands <<2
+#-------------------------------------------------------------------------------
+export LSCOLORS=gxfxcxdxbxegedabagacad
+# >>2
+# Completions <<2
+#-------------------------------------------------------------------------------
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' list-colors "$LS_COLORS"
+zstyle -e ':completion:*:(ssh|scp|sshfs|ping|telnet|nc|rsync):*' hosts '
+    reply=( ${=${${(M)${(f)"$(<~/.ssh/config)"}:#Host*}#Host }:#*\**} )'
+# >>2
+# Set the desired zsh options <<2
+#-------------------------------------------------------------------------------
+setopt  auto_cd
+setopt  auto_pushd
+setopt  noclobber
+setopt  complete_aliases
+setopt  extended_glob
+setopt  hist_ignore_all_dups
+setopt  hist_ignore_space
+setopt  share_history
+setopt  noflowcontrol
+setopt  list_types
+setopt  mark_dirs
+setopt  path_dirs
+setopt  prompt_percent
+setopt  prompt_subst
+# >>2
+# History settings <<2
+#-------------------------------------------------------------------------------
+HISTFILE=$HOME/.zsh_history
+HISTFILESIZE=65536
+HISTSIZE=4096
+SAVEHIST=4096
+REPORTTIME=60
+# >>2
+# utf-8 in the terminal, will break stuff if your term isn't utf aware <<2
+#-------------------------------------------------------------------------------
+export LANG=en_US.UTF-8
+export LC_ALL=$LANG
+export LC_COLLATE=C
+# >>2
+# Set grepoptions <<2
+#-------------------------------------------------------------------------------
+export GREP_OPTIONS='--color=auto'
+# >>2
+# Use the correct ctags <<2
+#-------------------------------------------------------------------------------
+PATH="/usr/local/bin:$PATH"
+# >>2
+# Editor and display configurations <<2
+#-------------------------------------------------------------------------------
+export GIT_EDITOR='vim'
+export LESS='-imJMWR'
+export PAGER="less $LESS"
+export MANPAGER=$PAGER
+export GIT_PAGER=$PAGER
+export BROWSER='chromium-browser'
+# >>2
+# Specify virtualenv directories <<2
+#-------------------------------------------------------------------------------
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/VirtualDevEnvs
+# >>2
+# Includes <<2
+include () {
+    [[ -s "$1" ]] && source "$1"
+}
+# Add rmv if exists <<3
+#-------------------------------------------------------------------------------
+include ~/.rvm/scripts/rvm
+# >>3
+# Add nvm if exists <<3
+#-------------------------------------------------------------------------------
+include ~/.nvm/nvm.sh
+# >>3
+# >>2
+# Tmux Ctrl-S fix for Linux <<2
+#------------------------------------------------------------------------------
+if [ "$(uname)" != "Darwin" ]; then
+    stty -ixon
+fi
+# >>2
+# >>1
+
+# EOF

@@ -1,0 +1,260 @@
+autoload -U colors && colors
+autoload -U promptinit
+autoload -Uz vcs_info
+
+local reset white gray green red yellow blue cyan magenta black
+reset="%{${reset_color}%}"
+white="%{$fg[white]%}"
+gray="%{$fg_bold[black]%}"
+green="%{$fg_bold[green]%}"
+red="%{$fg[red]%}"
+yellow="%{$fg[yellow]%}"
+cyan="%{$fg[cyan]%}"
+blue="%{$fg[blue]%}"
+magenta="%{$fg[magenta]%}"
+black="%{$fg[black]%}"
+
+local -A pr_com
+local -a prompt_left_lines
+
+zstyle ":pr_jrock:" mode full
+zstyle ':pr_jrock:*' hooks pwd usr vcs venv rvm npm jobs prompt
+zstyle ':pr_jrock:*' pwd "%~"
+
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:(git*):*' check-for-changes true
+zstyle ':vcs_info:(git*)' formats "(%b%m)"
+zstyle ':vcs_info:(git*)' actionformats "(%b|${red}%a${gray}%m)"
+zstyle ':vcs_info:git*+set-message:*' hooks git-statuses git-st
+
+function pr_run_hooks() {
+    local hook func
+    local -a hooks
+
+    zstyle -g hooks ":pr_jrock:*" hooks
+
+    (( ${#hooks} == 0 )) && return 0
+
+    for hook in ${hooks} ; do
+        func="+pr-${hook}"
+        if (( ${+functions[$func]} == 0 )); then
+            continue
+        fi
+        true
+        ${func} "$@"
+        case $? in
+            (0)
+                ;;
+            (*)
+                break
+                ;;
+        esac
+    done
+}
+
+function +pr-mode-full() {
+    local i info_line_width return_status_width filler v_shim rvm_shim npm_shim
+
+    infoline=( ${pr_com[pwd]} ${pr_com[usr]} )
+
+    [[ -n ${pr_com[npm]} ]] && infoline[1]=(
+        ${infoline[1]}
+        "${cyan} n${gray}(${pr_com[npm]}${gray})${reset}"
+    )
+
+    npm_shim=0
+    if [[ -n ${pr_com[npm]} ]]; then
+        npm_shim+=1
+    fi
+
+    [[ -n ${pr_com[rvm]} ]] && infoline[1]=(
+        ${infoline[1]}
+        "${red} r${gray}(${pr_com[rvm]}${gray})${reset}"
+    )
+
+    rvm_shim=0
+    if [[ -n ${pr_com[rvm]} ]]; then
+        rvm_shim+=1
+    fi
+
+    [[ -n ${pr_com[venv]} ]] && infoline[1]=(
+        ${infoline[1]}
+        "${blue} v${gray}(${pr_com[venv]}${gray})${reset}"
+    )
+
+    v_shim=0
+    if [[ -n ${pr_com[venv]} ]]; then
+        v_shim+=1
+    fi
+
+    info_line_width=${(S)infoline//\%\{*\%\}}
+    info_line_width=${#${(%)info_line_width}}
+    return_status_width=3
+
+    filler="${gray}${(l:$(( $COLUMNS - $info_line_width - $return_status_width + $v_shim + $rvm_shim + $npm_shim))::─:)}${reset}"
+    infoline[-1]=( ${filler} ${infoline[-1]} )
+
+    lines=(
+        ${(j::)infoline}
+        ${pr_com[prompt]}
+    )
+
+    [[ -n ${pr_com[vcs]} ]] && lines[1]=(
+        ${lines[1]}
+        "${gray}${pr_com[vcs]}${reset}"
+
+    )
+
+    if [[ -n ${pr_com[vcs]} ]]; then
+        lines[1]="${gray}┌──${lines[1]}${gray}─${reset}"
+        lines[2]="${gray}├──${lines[2]}${reset}"
+        lines[3]="${gray}└──➤${lines[3]}${reset}"
+    else
+        lines[1]="${gray}┌──${lines[1]}${gray}─${reset}"
+        lines[2]="${gray}└──➤${lines[2]}${reset}"
+    fi
+
+    prompt_left_lines=( ${lines[@]} )
+}
+
+function +pr-vcs() {
+    local -a v_vcs
+
+    [[ -n ${vcs_info_msg_0_} ]] && v_vcs=(
+        ${gray}
+        ${vcs_info_msg_0_}
+        ${reset}
+    )
+
+    pr_com[vcs]=${(j::)v_vcs}
+}
+
+function +pr-venv() {
+    local -a v_venv
+
+    [[ -n ${VIRTUAL_ENV} ]] && v_venv=(
+        ${blue}
+        $(basename ${VIRTUAL_ENV})
+        ${reset}
+    )
+
+    pr_com[venv]=${(j::)v_venv}
+}
+
+function +pr-rvm() {
+    local -a v_rvm
+
+    if [[ $(rvm current | awk '{split($0,a,"@");print a[2]}') != "" ]]; then
+        v_rvm=(
+            ${red}
+            $(rvm current | awk '{split($0,a,"@");print a[2]}')
+            ${reset}
+        )
+    fi
+
+    pr_com[rvm]=${(j::)v_rvm}
+}
+
+function +pr-npm() {
+    local -a v_npm
+
+    if [[ ${NODE_NAME}  != "" ]]; then
+        v_npm=(
+            ${cyan}
+            ${NODE_NAME}
+            ${reset}
+        )
+    fi
+
+    pr_com[npm]=${(j::)v_npm}
+}
+
+function +pr-jobs() {
+    local -a v_jobs
+    v_jobs=( "%(1j.${gray}%j${reset}.)" )
+    pr_com[jobs]=${(j::)v_jobs}
+}
+
+function +pr-prompt() {
+    local -a v_pwd i_pwd
+    local -a exit_status i_usr i_host exit_status
+
+    zstyle -g i_pwd ":pr_jrock:*" pwd
+    v_pwd+=( ${gray}\( )
+    [[ -w $PWD ]] && v_pwd+=( ${green} ) || v_pwd+=( ${yellow} )
+    v_pwd+=( ${i_pwd} )
+    v_pwd+=( ${gray}\) )
+    v_pwd+=( ${reset} )
+    pr_com[pwd]=${(j::)v_pwd}${reset}
+
+
+    exit_status=( ${gray}\( )
+    exit_status+="%(0?.${green}✔.${red}✘)"
+    exit_status+=( ${gray}\) )
+    exit_status+=( ${reset} )
+
+    pr_com[usr]=${(j::)exit_status}
+}
+
+function +vi-git-st() {
+    local ahead behind remote
+    local -a gitstatus
+
+    remote=${$(git rev-parse --verify ${hook_com[branch]}@{upstream} \
+        --symbolic-full-name --abbrev-ref 2>/dev/null)}
+
+    if [[ -n ${remote} ]] ; then
+        ahead=$(git rev-list ${hook_com[branch]}@{upstream}..HEAD 2>/dev/null | wc -l | sed -e 's/^[ \t]*//')
+        (( $ahead )) && gitstatus+=( "${green}+${ahead}${gray}" )
+
+        behind=$(git rev-list HEAD..${hook_com[branch]}@{upstream} 2>/dev/null | wc -l | sed -e 's/^[ \t]*//')
+        (( $behind )) && gitstatus+=( "${red}-${behind}${gray}" )
+
+        user_data[gitstatus]=${gitstatus}
+        hook_com[branch]="${hook_com[branch]} [${remote} ${(j:/:)gitstatus}]"
+    fi
+}
+
+function +vi-git-st-compact() {
+    [[ -n ${user_data[gitstatus]} ]] \
+        && hook_com[misc]="@{u}${(j:/:)user_data[gitstatus]}"
+}
+
+function +vi-git-statuses() {
+    git status -s >| /tmp/gitstatus.txt
+    staged=$( cat /tmp/gitstatus.txt | grep -c "^[MARCD]")
+    unstaged=$( cat /tmp/gitstatus.txt | grep -c "^.[MARCD]")
+    untracked=$( cat /tmp/gitstatus.txt | grep -c "^\?")
+    stashes=$(git stash list 2>/dev/null | wc -l | sed -e 's/^[ \t]*//')
+
+    if [[ ${staged} != 0 ]] ; then
+        hook_com[misc]+=" ${green}${staged}${gray}"
+    fi
+
+    if [[ ${unstaged} != 0 ]] ; then
+        hook_com[misc]+=" ${red}${unstaged}${gray}"
+    fi
+
+    if [[ ${untracked} != 0 ]] ; then
+        hook_com[misc]+=" ${yellow}${untracked}${gray}"
+    fi
+
+    if [[ ${stashes} != 0 ]] ; then
+        hook_com[misc]+=" ${gray}${stashes}${gray}"
+    fi
+}
+
+function precmd_prompt {
+    local func
+
+    pr_com=()
+    prompt_left_lines=()
+
+    vcs_info
+    pr_run_hooks
+
+    func="+pr-mode-full"
+    ${func} "$@"
+
+    PROMPT="${(F)prompt_left_lines} "
+}
