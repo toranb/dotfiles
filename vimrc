@@ -11,7 +11,7 @@ endif
 if has('vim_starting')
     set rtp+=$HOME/.vim/bundle/neobundle.vim/
 endif
-call neobundle#rc(expand($HOME.'/.vim/bundle/'))
+call neobundle#begin(expand($HOME.'/.vim/bundle/'))
 NeoBundle 'Shougo/neobundle.vim'
 NeoBundle 'bkad/CamelCaseMotion'
 NeoBundle 'Shougo/neocomplcache.vim'
@@ -46,6 +46,7 @@ NeoBundle '~/dotfiles/vim/my-plugins/tmux-navigator', {'type': 'nosync'}
 NeoBundle '~/dotfiles/vim/my-plugins/vim-ack', {'type': 'nosync'}
 NeoBundle '~/dotfiles/vim/my-plugins/vim-grep-quickfix', {'type': 'nosync'}
 NeoBundle '~/dotfiles/vim/my-plugins/vim-wiki-links', {'type': 'nosync'}
+call neobundle#end()
 filetype  plugin on
 filetype  indent on
 set t_Co=256
