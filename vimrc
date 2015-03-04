@@ -41,6 +41,7 @@ NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'kien/rainbow_parentheses.vim'
 NeoBundle 'wellle/targets.vim'
 NeoBundle 'thinca/vim-qfreplace'
+NeoBundle 'junegunn/vim-easy-align'
 NeoBundle '~/dotfiles/vim/my-plugins/nerd-ack', {'type': 'nosync'}
 NeoBundle '~/dotfiles/vim/my-plugins/tmux-navigator', {'type': 'nosync'}
 NeoBundle '~/dotfiles/vim/my-plugins/vim-ack', {'type': 'nosync'}
@@ -75,7 +76,7 @@ set expandtab                          " Make vim use spaces and not tabs
 set undolevels=1000                    " Never can be too careful when it comes to undoing
 set hidden                             " Don't unload the buffer when we switch between them. Saves undo history
 set visualbell                         " Visual bell instead of beeping
-set wildignore=*.swp,*.bak,*.pyc,*.class,jspm_packages/**,node_modules/**  " wildmenu: ignore these extensions
+set wildignore=*.swp,*.bak,*.pyc,*.class,tmp/**,dist/**,node_modules/**  " wildmenu: ignore these extensions
 set wildmenu                           " Command-line completion in an enhanced mode
 set shell=bash                         " Required to let zsh know how to run things on command line
 set ttimeoutlen=50                     " Fix delay when escaping from insert with Esc
@@ -151,7 +152,7 @@ let g:neocomplcache_force_overwrite_completefunc = 1
 let g:neocomplcache_auto_completion_start_length = 99
 set completeopt-=preview
 let g:ctrlp_use_caching=0
-let g:ctrlp_custom_ignore = '\v[\/](transpiled)|dist|node_modules|(\.(swp|git|bak|pyc|DS_Store))$'
+let g:ctrlp_custom_ignore = '\v[\/](transpiled)|dist|tmp|node_modules|(\.(swp|git|bak|pyc|DS_Store))$'
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_max_files=0
 let g:ctrlp_max_height = 18
@@ -213,7 +214,7 @@ let g:rbpt_loadcmd_toggle = 0
 nnoremap <Esc><Esc> :nohlsearch<CR>
 function! RenewTagsFile()
     exe 'silent !rm -rf .ctags'
-    exe 'silent !ctags -a -Rf .ctags --languages=javascript --exclude=.git --exclude="*.min.js" --exclude=node_modules --exclude=jspm_packages 2>/dev/null'
+    exe 'silent !ctags -a -Rf .ctags --languages=javascript --exclude=.git --exclude="*.min.js" --exclude=node_modules --exclude=tmp 2>/dev/null'
     exe 'redraw!'
 endfunction
 function! SortLines() range
@@ -398,3 +399,5 @@ endfunction
 
 let g:special_blend_run='gulp test'
 let g:syntastic_javascript_checkers = ['']
+
+vmap <Enter> <Plug>(EasyAlign)

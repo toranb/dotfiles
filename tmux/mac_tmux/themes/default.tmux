@@ -43,5 +43,5 @@ setw -g window-status-content-attr bold
 # -------------
 set -g status-left ''
 set -g status-right-length 150
-set -g status-right " #[fg=colour160] ♥ #[fg=colour69]#(bash ~/.tmux/scripts/remaining_battery.sh) | #(ifconfig | grep 192 | cut -d ' ' -f 2) | %H:%M "
+set -g status-right " #[fg=colour160] ♥ #[fg=colour69]#(bash ~/.tmux/scripts/remaining_battery.sh) | #(ifconfig | grep 192 | cut -d ' ' -f 2) | v1.0 "
 set -g status-utf8 on
