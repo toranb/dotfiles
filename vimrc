@@ -47,6 +47,7 @@ NeoBundle '~/dotfiles/vim/my-plugins/tmux-navigator', {'type': 'nosync'}
 NeoBundle '~/dotfiles/vim/my-plugins/vim-ack', {'type': 'nosync'}
 NeoBundle '~/dotfiles/vim/my-plugins/vim-grep-quickfix', {'type': 'nosync'}
 NeoBundle '~/dotfiles/vim/my-plugins/vim-wiki-links', {'type': 'nosync'}
+NeoBundle 'hhff/SpacegrayEighties.vim'
 call neobundle#end()
 filetype  plugin on
 filetype  indent on
@@ -96,7 +97,7 @@ if has("autocmd")
 endif
 
 syntax enable
-colorscheme honeybadger
+colorscheme SpacegrayEighties
 let g:solarized_termcolors = &t_Co
 let g:solarized_termtrans = 1
 let g:solarized_termcolors=256
