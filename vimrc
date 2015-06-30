@@ -145,6 +145,7 @@ let g:syntastic_mode_map={ 'mode': 'active',
                      \ 'passive_filetypes': ['html', 'handlebars'] }
 let g:neocomplcache_enable_at_startup=0
 let g:jedi#auto_vim_configuration = 0
+let g:jedi#goto_command = "<leader>j"
 if !exists('g:neocomplcache_force_omni_patterns')
       let g:neocomplcache_force_omni_patterns = {}
   endif
