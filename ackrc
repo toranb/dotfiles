@@ -1,6 +1,6 @@
 --literal
 --smart-case
---type-set=handlebars=.handlebars
+--type-set=handlebars=.hbs
 --type-set=javascript=.js
 --type-set=typescript=.ts
 --type=python
@@ -8,3 +8,7 @@
 --type=handlebars
 --type=javascript
 --type=typescript
+--ignore-dir=node_modules
+--ignore-dir=bower_components
+--ignore-dir=dist
+--ignore-dir=tmp
