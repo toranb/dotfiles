@@ -12,6 +12,7 @@ sudo rm -rf ~/.gitignore > /dev/null 2>&1
 sudo rm -rf ~/.gitmodules > /dev/null 2>&1
 sudo rm -rf ~/.gvimrc > /dev/null 2>&1
 sudo rm -rf ~/.vimrc > /dev/null 2>&1
+sudo rm -rf ~/.rvmrc > /dev/null 2>&1
 sudo rm -rf ~/.viminfo > /dev/null 2>&1
 sudo rm -rf ~/.vim > /dev/null 2>&1
 sudo rm -rf ~/.oh-my-zsh > /dev/null 2>&1
@@ -36,6 +37,7 @@ sudo rm -rf ~/.psqlrc
 # Symlink the new config files. Assumes files are saved in ~/dotfiles
 ln -s ~/dotfiles/vim ~/.vim
 ln -s ~/dotfiles/vimrc ~/.vimrc
+ln -s ~/dotfiles/rvmrc ~/.rvmrc
 if [ "$(uname)" = "Darwin" ]; then
     ln -s ~/dotfiles/tmux/mac_tmux ~/.tmux
     ln -s ~/dotfiles/config ~/.config
