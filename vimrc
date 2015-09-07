@@ -42,6 +42,7 @@ NeoBundle 'kien/rainbow_parentheses.vim'
 NeoBundle 'wellle/targets.vim'
 NeoBundle 'thinca/vim-qfreplace'
 NeoBundle 'junegunn/vim-easy-align'
+NeoBundle 'gilgigilgil/anderson.vim'
 NeoBundle '~/dotfiles/vim/my-plugins/nerd-ack', {'type': 'nosync'}
 NeoBundle '~/dotfiles/vim/my-plugins/tmux-navigator', {'type': 'nosync'}
 NeoBundle '~/dotfiles/vim/my-plugins/vim-ack', {'type': 'nosync'}
@@ -97,7 +98,7 @@ if has("autocmd")
 endif
 
 syntax enable
-colorscheme SpacegrayEighties
+colorscheme anderson
 let g:solarized_termcolors = &t_Co
 let g:solarized_termtrans = 1
 let g:solarized_termcolors=256
