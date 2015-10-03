@@ -43,6 +43,7 @@ NeoBundle 'wellle/targets.vim'
 NeoBundle 'thinca/vim-qfreplace'
 NeoBundle 'junegunn/vim-easy-align'
 NeoBundle 'gilgigilgil/anderson.vim'
+NeoBundle 'mustache/vim-mustache-handlebars'
 NeoBundle '~/dotfiles/vim/my-plugins/nerd-ack', {'type': 'nosync'}
 NeoBundle '~/dotfiles/vim/my-plugins/tmux-navigator', {'type': 'nosync'}
 NeoBundle '~/dotfiles/vim/my-plugins/vim-ack', {'type': 'nosync'}
