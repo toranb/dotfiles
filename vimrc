@@ -34,6 +34,7 @@ NeoBundle 'justinmk/vim-sneak'
 NeoBundle 'JarrodCTaylor/vim-shell-executor'
 NeoBundle 'epeli/slimux'
 NeoBundle 'JarrodCTaylor/vim-qunit-special-blend'
+NeoBundle 'JarrodCTaylor/spartan'
 NeoBundle 'leafgarland/typescript-vim'
 NeoBundle 'https://github.com/mattn/emmet-vim/'
 NeoBundle 'osyo-manga/vim-over'
@@ -99,7 +100,7 @@ if has("autocmd")
 endif
 
 syntax enable
-colorscheme anderson
+colorscheme honeybadger
 let g:solarized_termcolors = &t_Co
 let g:solarized_termtrans = 1
 let g:solarized_termcolors=256
