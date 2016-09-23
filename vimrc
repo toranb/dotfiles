@@ -47,12 +47,14 @@ NeoBundle 'thinca/vim-qfreplace'
 NeoBundle 'junegunn/vim-easy-align'
 NeoBundle 'gilgigilgil/anderson.vim'
 NeoBundle 'mustache/vim-mustache-handlebars'
+NeoBundle 'trevordmiller/nova-vim'
 NeoBundle '~/dotfiles/vim/my-plugins/nerd-ack', {'type': 'nosync'}
 NeoBundle '~/dotfiles/vim/my-plugins/tmux-navigator', {'type': 'nosync'}
 NeoBundle '~/dotfiles/vim/my-plugins/vim-ack', {'type': 'nosync'}
 NeoBundle '~/dotfiles/vim/my-plugins/vim-grep-quickfix', {'type': 'nosync'}
 NeoBundle '~/dotfiles/vim/my-plugins/vim-wiki-links', {'type': 'nosync'}
 NeoBundle 'hhff/SpacegrayEighties.vim'
+NeoBundle 'dracula/vim'
 call neobundle#end()
 filetype  plugin on
 filetype  indent on
@@ -102,13 +104,10 @@ if has("autocmd")
 endif
 
 syntax enable
-colorscheme honeybadger
-let g:solarized_termcolors = &t_Co
-let g:solarized_termtrans = 1
-let g:solarized_termcolors=256
-let g:solarized_visibility = "high"
-let g:solarized_contrast = "high"
-set background=dark
+colorscheme nova
+set t_Co=256
+set t_ut=
+set notermguicolors
 
 let g:mustache_abbreviations = 1
 

@@ -12,3 +12,5 @@
 --ignore-dir=bower_components
 --ignore-dir=dist
 --ignore-dir=tmp
+--type-set=stylesheets=.scss,.sass
+--type=stylesheets
