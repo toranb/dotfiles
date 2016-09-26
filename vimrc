@@ -104,10 +104,12 @@ if has("autocmd")
 endif
 
 syntax enable
-colorscheme nova
 set t_Co=256
 set t_ut=
-set notermguicolors
+colorscheme nova
+set background=dark
+hi clear
+" set notermguicolors
 
 let g:mustache_abbreviations = 1
 
