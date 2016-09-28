@@ -110,6 +110,7 @@ colorscheme nova
 set background=dark
 hi clear
 hi String ctermfg=81 ctermbg=NONE cterm=NONE guifg=#5fd7ff guibg=NONE gui=NONE
+hi CursorLine cterm=NONE ctermbg=darkred ctermfg=white
 " set notermguicolors
 
 let g:mustache_abbreviations = 1
@@ -408,5 +409,6 @@ endfunction
 
 let g:special_blend_run='gulp test'
 let g:syntastic_javascript_checkers = ['']
+map <Leader>hi :set cursorline! cursorcolumn!<CR>
 
 vmap <Enter> <Plug>(EasyAlign)
