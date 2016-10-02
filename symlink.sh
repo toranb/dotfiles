@@ -25,8 +25,6 @@ sudo rm -rf ~/.zsh-syntax-highlighting.zsh > /dev/null 2>&1
 sudo rm -rf ~/highlighters > /dev/null 2>&1
 sudo rm -rf ~/.ackrc > /dev/null 2>&1
 sudo rm -rf ~/README > /dev/null 2>&1
-sudo rm -rf ~/.antigen > /dev/null 2>&1
-sudo rm -rf ~/.antigen.zsh > /dev/null 2>&1
 if [ "$(uname)" = "Darwin" ]; then
     sudo rm -rf ~/.config > /dev/null 2>&1
 fi
@@ -45,6 +43,7 @@ else
     ln -s ~/dotfiles/tmux/linux_tmux ~/.tmux
 fi
 ln -s ~/dotfiles/tmux/tmux.conf ~/.tmux.conf
+ln -s ~/dotfiles/zsh/zshplugs ~/.zshplugins
 ln -s ~/dotfiles/zsh/zshrc ~/.zshrc
 ln -s ~/dotfiles/ackrc ~/.ackrc
 ln -s ~/dotfiles/gitconfig ~/.gitconfig

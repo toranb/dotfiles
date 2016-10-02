@@ -27,33 +27,22 @@ precmd_functions=( precmd_prompt )
 # >>2
 # >>1
 
-# Setup antigen <<1
+# pull in all the zsh plugins
 #-------------------------------------------------------------------------------
-if [[ ! -f ~/.antigen.zsh ]]; then
-    curl https://raw.githubusercontent.com/zsh-users/antigen/master/antigen.zsh > ~/.antigen.zsh
-fi
-
-ANTIGEN_DEFAULT_REPO_URL=https://bitbucket.org/toranb/zsh-components-osx
-source ~/.antigen.zsh
-# >>1
-
-# set antigen bundles <<1
-#-------------------------------------------------------------------------------
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle aliases
-antigen bundle any
-antigen bundle key_bindings
-antigen bundle mem_usage
-antigen bundle nicemount
-antigen bundle path
-antigen bundle simple_server
-antigen bundle spell
-antigen bundle workon_node_env
-antigen bundle workon_virtualenv
-antigen bundle cd
-antigen bundle ackv
-antigen bundle ff
-antigen bundle extract
+source ~/.zshplugins/zsh-syntax-highlighting.plugin.zsh > /dev/null 2>&1
+source ~/.zshplugins/aliases.plugin.zsh > /dev/null 2>&1
+source ~/.zshplugins/any.plugin.zsh > /dev/null 2>&1
+source ~/.zshplugins/key_bindings.plugin.zsh > /dev/null 2>&1
+source ~/.zshplugins/mem_usage.plugin.zsh > /dev/null 2>&1
+source ~/.zshplugins/nicemount.plugin.zsh > /dev/null 2>&1
+source ~/.zshplugins/path.plugin.zsh > /dev/null 2>&1
+source ~/.zshplugins/simple_server.plugin.zsh > /dev/null 2>&1
+source ~/.zshplugins/workon_node_env.plugin.zsh > /dev/null 2>&1
+source ~/.zshplugins/workon_virtualenv.plugin.zsh > /dev/null 2>&1
+source ~/.zshplugins/cd.plugin.zsh > /dev/null 2>&1
+source ~/.zshplugins/ackv.plugin.zsh > /dev/null 2>&1
+source ~/.zshplugins/ff.plugin.zsh > /dev/null 2>&1
+source ~/.zshplugins/extract.plugin.zsh > /dev/null 2>&1
 # >>1
 
 # General Settings <<1
