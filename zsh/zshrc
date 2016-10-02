@@ -24,8 +24,10 @@ local -a precmd_functions
 # Run precmd functions so we get our pimped out prompt
 #------------------------------------------------------------------------------
 precmd_functions=( precmd_prompt )
-# >>2
-# >>1
+# pull down the zsh-syntax-highlighting repo
+if [[ ! -d ~/zsh-syntax-highlighting ]]; then
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
+fi
 
 # pull in all the zsh plugins
 #-------------------------------------------------------------------------------
