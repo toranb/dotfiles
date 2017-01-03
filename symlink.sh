@@ -53,6 +53,8 @@ ln -s ~/dotfiles/ctags ~/.ctags
 ln -s ~/dotfiles/psqlrc ~/.psqlrc
 ln -s ~/dotfiles/tigrc ~/.tigrc
 ln -s ~/dotfiles/hyper.js ~/.hyper.js
+sudo ln -s /Users/ubu/.nvm/versions/node/v4.7.0//bin/node /usr/local/bin/node
+sudo ln -s /Users/ubu/.nvm/versions/node/v4.7.0//bin/npm /usr/local/bin/npm
 
 echo -n "Would you like to configure your git name and email? (y/n) => "; read answer
 if [[ $answer = "Y" ]] || [[ $answer = "y" ]]; then
