@@ -25,6 +25,7 @@ sudo rm -rf ~/.zsh-syntax-highlighting.zsh > /dev/null 2>&1
 sudo rm -rf ~/highlighters > /dev/null 2>&1
 sudo rm -rf ~/.ackrc > /dev/null 2>&1
 sudo rm -rf ~/README > /dev/null 2>&1
+sudo rm -rf ~/.hyper.js > /dev/null 2>&1
 if [ "$(uname)" = "Darwin" ]; then
     sudo rm -rf ~/.config > /dev/null 2>&1
 fi
@@ -51,6 +52,7 @@ ln -s ~/dotfiles/gemrc ~/.gemrc
 ln -s ~/dotfiles/ctags ~/.ctags
 ln -s ~/dotfiles/psqlrc ~/.psqlrc
 ln -s ~/dotfiles/tigrc ~/.tigrc
+ln -s ~/dotfiles/hyper.js ~/.hyper.js
 
 echo -n "Would you like to configure your git name and email? (y/n) => "; read answer
 if [[ $answer = "Y" ]] || [[ $answer = "y" ]]; then
