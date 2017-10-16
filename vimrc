@@ -47,7 +47,7 @@ NeoBundle 'thinca/vim-qfreplace'
 NeoBundle 'junegunn/vim-easy-align'
 NeoBundle 'gilgigilgil/anderson.vim'
 NeoBundle 'mustache/vim-mustache-handlebars'
-NeoBundle 'trevordmiller/nova-vim'
+"NeoBundle 'trevordmiller/nova-vim'
 NeoBundle '~/dotfiles/vim/my-plugins/nerd-ack', {'type': 'nosync'}
 NeoBundle '~/dotfiles/vim/my-plugins/tmux-navigator', {'type': 'nosync'}
 NeoBundle '~/dotfiles/vim/my-plugins/vim-ack', {'type': 'nosync'}
@@ -107,7 +107,7 @@ endif
 syntax enable
 set t_Co=256
 set t_ut=
-colorscheme nova
+"colorscheme nova
 set background=dark
 hi clear
 hi String ctermfg=81 ctermbg=NONE cterm=NONE guifg=#5fd7ff guibg=NONE gui=NONE
