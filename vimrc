@@ -47,7 +47,7 @@ NeoBundle 'thinca/vim-qfreplace'
 NeoBundle 'junegunn/vim-easy-align'
 NeoBundle 'gilgigilgil/anderson.vim'
 NeoBundle 'mustache/vim-mustache-handlebars'
-NeoBundle 'trevordmiller/nova-vim'
+"NeoBundle 'trevordmiller/nova-vim'
 NeoBundle '~/dotfiles/vim/my-plugins/nerd-ack', {'type': 'nosync'}
 NeoBundle '~/dotfiles/vim/my-plugins/tmux-navigator', {'type': 'nosync'}
 NeoBundle '~/dotfiles/vim/my-plugins/vim-ack', {'type': 'nosync'}
@@ -79,7 +79,7 @@ set shiftwidth=4                       " Number of spaces to use for each step o
 set showcmd                            " Display incomplete commands in the bottom line of the screen
 set ignorecase                         " Ignore case when searching....
 set smartcase                          " ...unless uppercase letter are used
-set tabstop=4                          " Number of spaces that a <Tab> counts for
+set tabstop=2                          " Number of spaces that a <Tab> counts for
 set expandtab                          " Make vim use spaces and not tabs
 set undolevels=1000                    " Never can be too careful when it comes to undoing
 set hidden                             " Don't unload the buffer when we switch between them. Saves undo history
@@ -96,6 +96,7 @@ set clipboard=unnamed
 au BufNewFile,BufRead *.json set ft=javascript
 set pastetoggle=<F3>
 set nofoldenable
+set colorcolumn=120
 if has("autocmd")
   autocmd BufReadPost *
         \ if line("'\"") > 0 && line("'\"") <= line("$") |
@@ -106,7 +107,7 @@ endif
 syntax enable
 set t_Co=256
 set t_ut=
-colorscheme nova
+"colorscheme nova
 set background=dark
 hi clear
 hi String ctermfg=81 ctermbg=NONE cterm=NONE guifg=#5fd7ff guibg=NONE gui=NONE
@@ -195,7 +196,7 @@ let g:sneak#target_labels = "sfgkqwetyupzcvbnmSDFGHJKLQWERTYUPZXCVBNM1234567890r
 let g:user_emmet_install_global = 0
 autocmd FileType html,htmldjango,handlebars EmmetInstall
 let g:user_emmet_leader_key=','
-let g:indent_guides_start_level = 2
+let g:indent_guides_start_level = 1
 let g:indent_guides_guide_size = 1
 let g:indent_guides_exclude_filetypes = ['help', 'nerdtree']
 let g:indent_guides_auto_colors = 0
@@ -362,7 +363,19 @@ nnoremap k gk
 nnoremap <Leader>ff :CtrlP<CR>
 noremap <Leader>sp :set spell spelllang=en_us<CR>
 nnoremap <Leader>tb :TagbarToggle<CR>
-map <Leader>a :Ack!<space>
+nnoremap <C-F> :call SSearch("")<left><left>
+function! SSearch(string) abort
+  let saved_shellpipe = &shellpipe
+  let &shellpipe = '>'
+  try
+    execute 'Ack! --ignore-dir=lib' shellescape(a:string, 1)
+  finally
+    let &shellpipe = saved_shellpipe
+  endtry
+endfunction
+map <Leader>s :w<CR>
+map <Leader>v :e ~/.vimrc<CR>
+map <Leader>vs :so %<CR>
 map <Leader>d :NERDTreeToggle<CR>
 nmap <Leader>nt :NERDTreeFind<CR>
 map <Leader>tw :DjangoTestApp<CR>
@@ -396,6 +409,13 @@ nnoremap <Leader>W :%s/\s\+$//<CR>:let @/=''<CR>
 nmap <Leader>tm :RunSingleQunitTest<CR>
 nmap <Leader>tc :RunSingleQunitModule<CR>
 nmap <Leader>ta :!gulp test<CR>
+nmap <Leader>t  :!npm run test 2> /dev/null<CR>
+nmap <Leader>tt :!npm run tests:unit 2> /dev/null<CR>
+nmap <Leader>ti :!npm run tests:integration 2> /dev/null<CR>
+nmap <Leader>l  :!npm run lint:js:fix 2> /dev/null<CR>
+nmap <Leader>ll  :!npm run lint:js:fix 2> /dev/null<CR><CR>
+nmap <Leader>lll  :!npm run lint:js:fix 2> /dev/null<CR>
+nmap <Leader>llt  :!npm run lint:js:fix 2> /dev/null<CR>:!npm run tests:unit 2> /dev/null<CR>
 
 nmap <Leader>j :call InvokeJumpToByType()<CR>
 function! InvokeJumpToByType()
